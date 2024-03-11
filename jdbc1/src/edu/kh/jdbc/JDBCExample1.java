@@ -82,7 +82,7 @@ public class JDBCExample1 {
 			/* 5. Statment 객체를 이용해서 SQL 수행 후 결과 반환 받기*/
 			rs=stmt.executeQuery(sql);
 			
-			/* 6. 조회 결과가 담겨 있는 ResultSet을 커서를 이용해 일행실 접근해며
+			/* 6. 조회 결과가 담겨 있는 ResultSet을 커서를 이용해 일 행씩 접근해며
 			 * 각 행의 컬럼 값 얻어오기 */
 			
 			while (rs.next()) {
