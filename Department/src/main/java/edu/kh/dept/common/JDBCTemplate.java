@@ -33,7 +33,7 @@ public class JDBCTemplate {
 	  * @return conn
 	  */
 	public static Connection getConnection() {
-		
+		 
 		try {
 			//Connetion이 없거나 닫혀있는 상태의 경우 -> 새 Connetion생성
 			if(conn==null || conn.isClosed()) {

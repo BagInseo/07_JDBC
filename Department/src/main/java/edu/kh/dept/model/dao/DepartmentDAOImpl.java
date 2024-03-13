@@ -87,6 +87,41 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 		
 		return deptlList;
 	}
+
+
+	//부서 추가
+	@Override
+	public int insertDepartment(Connection conn, Department dept) throws SQLException {
+		
+		//결과 저장용 변수/ 객체 생성
+		int result = 0;
+		
+		try {
+		
+			// 2. sql 작성(얻어오기)
+			String sql = prop.getProperty("insertDepartment");
+			
+			// 3. PreparedStatement 객체 생성 + sql 적재
+			pstmt=conn.prepareStatement(sql);
+			
+			// 4. ?에 알맞은 값 대입
+			pstmt.setString(1, dept.getDeptId());
+			pstmt.setString(2, dept.getDeptTitle());
+			pstmt.setString(3, dept.getLocationId());
+			
+			//sql 수행 후 결과 반환
+			result = pstmt.executeUpdate();
+			
+			
+		} finally {
+			
+			// 6. 사용한 JDBC 객체 자원 반환 (단, 커넥션 제외)
+			close(pstmt);
+		
+		}
+		
+		return result;
+	}
 	
 	
 	
