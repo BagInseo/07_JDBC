@@ -86,7 +86,7 @@ public class JDBCTemplate {
 		
 		public static void rollback(Connection conn) {
 			try {
-				if(conn != null && !conn.isClosed()) conn.commit();
+				if(conn != null && !conn.isClosed()) conn.rollback();
 				
 			} catch (Exception e) {
 				e.printStackTrace();
