@@ -89,5 +89,113 @@ public class DepartmentServiceImpl implements DepartmentService{
 		}
 		return result;
 	}
+
+
+	@Override
+	public int multiInsert(List<Department> deptList) {
+		
+		//1.Connection 얻어오기
+		Connection conn = getConnection();
+		
+		int result=0;
+		String currentDeptId = null;
+		
+		
+		try {
+			
+			// 2. 전달받은 deptList의 크기(길이)만큼 반복하며 
+			// DB에 INSERT하는 DAO 메서드 호출
+			
+			for (Department dept : deptList) {
+				currentDeptId = dept.getDeptId();
+				
+				result += dao.insertDepartment(conn, dept);
+			}
+			
+			//3. 트랜젝션 제어 처리
+			// result에 누적된 값 (== 삽입 성공한 행의 개수)과
+			// deptList의 길이가 같은 경우 == 모두 삽입 성공  => commit
+			
+			// reslut != deptList의 길이 == 모두 삽임 실패  => rollback
+			
+			if(result == deptList.size()) commit(conn);
+			else 						  rollback(conn);
+			
+			
+			
+		} catch (SQLException e) {
+			
+			// 4. SQL 수행 중 오류 발생 시 
+			//(PK, NOT NULL  제약조건 위배, 데이터 크기 초과)
+			e.printStackTrace();
+			rollback(conn); //sql이 하나라도 실패하면 전체 rollback
+			
+			
+			//PK 제약조건 위배만 생각하고 코드 작성
+			throw new DepartmentInsertException(currentDeptId+"부서 코드가 이미 존재합니다. ");
+		
+		}
+		
+		finally {
+			close(conn);
+		}
+		
+	
+		return result;
+	}
+
+
+	@Override
+	public int deleteDepartment(String deptId) throws SQLException{
+	
+		Connection conn = getConnection();
+		
+		int result=0;
+		
+		try {
+			
+			result = dao.deleteDepartment(conn,deptId);
+			
+			if(result>0)	commit(conn);
+			else			rollback(conn);
+			
+		}
+		finally {
+			close(conn);
+		}
+		return result;
+	}
+
+
+	@Override
+	public Department selectOne(String deptId) throws SQLException {
+		
+		Connection conn = getConnection();
+		Department dept = dao.selectOne(conn,deptId);
+		
+		close(conn);
+		
+		return dept;
+	}
+
+
+	@Override
+	public int updateDepartment(Department dept) throws SQLException {
+		
+		int result=0;
+		
+		Connection conn = getConnection();
+		result=dao.updateDepartment(conn,dept);
+		
+		if(result>0) commit(conn);
+		else		 rollback(conn);
+		
+		close(conn);
+		
+		return result;
+	}
+
+
+
 	
 }

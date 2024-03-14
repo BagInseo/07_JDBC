@@ -122,9 +122,96 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 		
 		return result;
 	}
+
+
+
+	@Override
+	public int deleteDepartment(Connection conn, String deptId) throws SQLException {
+
+		int result =0;
+		
+		try {
+			//sql 얻어오기
+			String sql= prop.getProperty("deleteDepartment");
+			
+			//PreparedStatement 객체 생성 + sql 적재
+			pstmt=conn.prepareStatement(sql);	
+			pstmt.setString(1, deptId);
+			result=pstmt.executeUpdate();
+			
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+
+
+	@Override
+	public Department selectOne(Connection conn, String deptId) throws SQLException {
+		 
+		Department dept =null;
+		
+		
+		try {
+			
+			String sql=prop.getProperty("selectOne");
+			
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1,deptId);
+			
+			rs=pstmt.executeQuery();
+			
+			//PK를 조건으로 삼은 select문은
+			//조회 성공 시 1행만 조회됨 -- while 대신 if문으로 1회만 접근
+			
+			if(rs.next()) {
+				dept=new Department(rs.getString("DEPT_ID"),
+						 			rs.getString("DEPT_TITLE"),
+						 			rs.getString("LOCATION_ID"));
+			}
+			
+			
+		} finally {
+			close(rs);
+			close(pstmt);
+			
+		
+		}
+		
+		
+		return dept;  //조회 실패 시 null, 성공 시 null 아님
+		
+		
+	}
 	
 	
-	
+	@Override
+	public int updateDepartment(Connection conn, Department dept) throws SQLException {
+		
+		int result=0;
+		
+				
+		try {
+			String sql = prop.getProperty("updateDepartment");
+			
+			pstmt=conn.prepareStatement(sql);
+			
+			pstmt.setString(1, dept.getDeptTitle());
+			pstmt.setString(2, dept.getLocationId());
+			pstmt.setString(3, dept.getDeptId());
+			
+			result=pstmt.executeUpdate();
+
+		}
+		
+		finally {
+			
+			close(pstmt);
+		}
+		
+		return result;
+	}
 	
 	
 	

@@ -18,4 +18,22 @@
 		VALUES (?, ?, ?)
 	</entry>
 	
+	<entry key = "deleteDepartment">
+		DELETE FROM DEPARTMENT4
+		WHERE DEPT_ID = ? 
+	</entry>
+	
+	<entry key = "selectOne">
+		SELECT * FROM DEPARTMENT4
+		WHERE DEPT_ID=?
+	</entry>
+	
+	
+	<entry key ="updateDepartment">
+		UPDATE DEPARTMENT4 
+		SET DEPT_TITLE = ?,
+			LOCATION_ID =?
+			
+		WHERE DEPT_ID = ?
+	</entry>
 </properties>
