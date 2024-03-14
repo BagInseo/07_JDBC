@@ -42,6 +42,13 @@ public interface DepartmentService {
 	 */
 	int updateDepartment(Department dept) throws SQLException;
 
+	/** 부서 조회
+	 * @param keyword
+	 * @return deptList
+	 * @throws SQLException
+	 */
+	List<Department> searchDepartment(String keyword) throws SQLException;
+
 
 
 

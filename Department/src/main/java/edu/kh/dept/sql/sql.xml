@@ -36,4 +36,10 @@
 			
 		WHERE DEPT_ID = ?
 	</entry>
+	
+	
+	<entry key ="searchDepartment">
+	SELECT *
+    FROM DEPARTMENT4 
+    WHERE DEPT_TITLE LIKE '%' || ? || '%'	</entry>
 </properties>

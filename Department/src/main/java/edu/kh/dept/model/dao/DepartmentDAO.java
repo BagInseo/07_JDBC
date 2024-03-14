@@ -54,6 +54,16 @@ public interface DepartmentDAO {
 	 * @throws SQLException 
 	 */
 	int updateDepartment(Connection conn, Department dept) throws SQLException;
+
+
+
+	/**부서 검색
+	 * @param conn
+	 * @param keyword
+	 * @return deptList
+	 * @throws SQLException 
+	 */
+	List<Department> searchDepartment(Connection conn, String keyword) throws SQLException;
 	
 	
 
