@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<!-- entry : K:V 한 쌍을 지칭하는 단어 -->
+
+
+<entry key = "addDiary">
+	INSERT INTO DIARY
+	VALUES(SEQ_DIARY_NO.NEXTVAL, ?,?,?,?,DEFAULT)
+</entry>
+
+<entry key="selectAll">
+	SELECT * FROM DIARY
+	ORDER BY DIARY_NO
+</entry>
+
+<entry key="deleteDiary">
+	DELETE FROM DIARY
+	WHERE DIARY_NO=?
+</entry>
+
+<entry key="detailDiary">
+	SELECT * 
+	FROM DIARY
+	WHERE DIARY_NO = ?
+</entry>
+
+<entry key="searchDiary">
+	SELECT *
+    FROM DIARY 
+    WHERE DIARY_TITLE LIKE '%' || ? || '%'
+</entry>
+
+</properties>
