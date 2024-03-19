@@ -1,0 +1,62 @@
+JDBC에서 할 일
+1.Connection 객체 생성하기
+=>private static Connection conn = null;
+
+2. 호출 시 연결 정보가 담긴 Connection 객체를 생성하여 반환하기 
+=> getConnection 만들기
+=>Properties 객체 생성
+=>String path에 컴파일된  driver.xml 파일의 위치를 얻어오기 
+ (Stirng path = JDBCTemplate.class.getResource("파일 위치").getPath());
+=>프로젝트 최상단 폴더에 존재하는 
+=>driver.xml 파일을 읽어와 Properties 객체에 저장
+(porp.loadFromXML(new FileInputStrem(path)));
+=>prop으로 부터 db의 경로를 얻어와 메모리에 적재한다
+//오라클 드라이버 클래스 읽어와 메모리 적재
+Claa.forName(driver);
+
+=>커넥션 객체 생성 
+conn = DriverManager.getConnection(url,user,pw);
+
+=>자동 커밋 false 
+conn.setAutoCommit(false);
+
+
+return conn;
+
+
+-------------------------------------------------------------------
+트렌젝션 제어 코드
+매개변수로 conn을 받아옴
+try{만약 conn이 비어있거나 isClose()인 경우 conn.commit/Rollback}
+
+
+-----------------------------------------------------------------
+JDBC 객체 반환 (close)
+매개변수로 conn,stmt, rs을 받아옴
+try{if(커넥션이 없거나 isClose()인 경우 conn,stmt,rs.close())}
+catch
+
+
+
+
+
+
+------------------------------------------------------------------
+ServiceImpl
+1. DAO 객체 생성
+private DAO dao = null;
+
+//기본 생성자로 객체 생성
+2. public ServiceImpl(){dao=new DAOImple} 
+----------------------------------------------------------
+DAOImpl
+1.JDBC 객체 참조 변수 선언
+private Statement stmt;
+private PreparedStatement pstmt;
+private ResultSet rs;
+
+2.Properties 객체 참조 변수 선언
+private Properties prop;
+
+3. 기본 생성자로 객체 생성 시
+   Properties로 객체 생성 + xml 파일 내용 읽어오기

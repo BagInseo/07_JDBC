@@ -45,7 +45,7 @@ public class JDBCTemplate {
 				
 				
 				//컴파일된 driver.xml 파일의 위치를 얻어오는 코드
-				String path=JDBCTemplate.class.getResource("/edu/kh/dept/sql/driver.xml").getPath();
+				String path=JDBCTemplate.class.getResource("/edu/kh/diary/sql/driver.xml").getPath();
 				
 				prop.loadFromXML(new FileInputStream(path));
 				//프로젝트 최상단 폴더에 존재하는
